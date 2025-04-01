@@ -1,6 +1,6 @@
 from rich.console import Console
-from gitlab_api import GitLabAPI
-from utils.logging_config import get_logger, get_log_level, get_environment
+from gitlab_cli.gitlab_api import GitLabAPI
+from gitlab_cli.utils.logging_config import get_logger, get_log_level, get_environment
 
 # Instancias compartidas
 console = Console()

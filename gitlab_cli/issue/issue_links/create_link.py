@@ -1,7 +1,7 @@
 import sys
 import click
-from utils import console
-from gitlab_api import GitLabAPI
+from gitlab_cli.utils import console
+from gitlab_cli.gitlab_api import GitLabAPI
 
 api = GitLabAPI()
 

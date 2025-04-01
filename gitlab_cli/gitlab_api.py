@@ -1,5 +1,5 @@
 import requests
-from config import (
+from gitlab_cli.config import (
     HEADERS,
     PROJECTS_ENDPOINT,
     USERS_ENDPOINT,

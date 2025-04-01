@@ -1,6 +1,6 @@
 import click
-from utils import console, gitlab
-from utils.logging_config import get_logger
+from gitlab_cli.utils import console, gitlab
+from gitlab_cli.utils.logging_config import get_logger
 
 # Initialize logger
 logger = get_logger(__name__)

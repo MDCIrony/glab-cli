@@ -1,9 +1,9 @@
 import click
 
 # Importar todos los comandos de enlaces
-from issue.issue_links.create_link import create_link
-from issue.issue_links.list_links import list_links
-from issue.issue_links.delete_link import delete_link
+from gitlab_cli.issue.issue_links.create_link import create_link
+from gitlab_cli.issue.issue_links.list_links import list_links
+from gitlab_cli.issue.issue_links.delete_link import delete_link
 
 
 @click.group("link")

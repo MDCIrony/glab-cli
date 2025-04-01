@@ -1,6 +1,6 @@
 import click
 from rich.table import Table
-from utils import console, gitlab, get_logger
+from gitlab_cli.utils import console, gitlab, get_logger
 
 # Inicializar el logger para este módulo
 logger = get_logger(__name__)

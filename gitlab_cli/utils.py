@@ -1,5 +1,5 @@
 # Este archivo ahora es un wrapper para mantener compatibilidad con el código existente
-from utils import console, gitlab, get_logger
+from gitlab_cli.utils import console, gitlab, get_logger
 
 # Si se necesita un logger en este archivo:
 logger = get_logger(__name__)
