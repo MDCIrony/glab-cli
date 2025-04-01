@@ -1,7 +1,13 @@
-git clone <repository-url>
-cd gitlab-api-client
+git clone https://github.com/MDCIrony/glab-cli.git
+cd glab-cli
 
 # GitLab CLI
+
+[![Python Package](https://github.com/MDCIrony/glab-cli/actions/workflows/python-package.yml/badge.svg)](https://github.com/MDCIrony/glab-cli/actions/workflows/python-package.yml)
+[![codecov](https://codecov.io/gh/MDCIrony/glab-cli/branch/main/graph/badge.svg)](https://codecov.io/gh/MDCIrony/glab-cli)
+[![PyPI version](https://badge.fury.io/py/gitlab-cli.svg)](https://badge.fury.io/py/gitlab-cli)
+[![Python Version](https://img.shields.io/pypi/pyversions/gitlab-cli.svg)](https://pypi.org/project/gitlab-cli/)
+[![License](https://img.shields.io/github/license/MDCIrony/glab-cli)](https://github.com/MDCIrony/glab-cli/blob/main/LICENSE)
 
 Una herramienta de línea de comandos para interactuar con la API de GitLab.
 

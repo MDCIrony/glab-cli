@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gitlab-cli",
-    version="0.1.0",
+    use_scm_version=True,  # Usa setuptools-scm para gestionar versiones
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -10,6 +10,18 @@ setup(
         "requests",
         "rich",
     ],
+    extras_require={
+        "dev": [
+            "pytest>=7.4.3",
+            "pytest-cov",
+            "black",
+            "flake8",
+            "mypy",
+            "build",
+            "twine",
+            "setuptools-scm",  # Añadido para desarrollo
+        ],
+    },
     entry_points={
         "console_scripts": [
             "gitlab-cli=gitlab_cli.cli:main",

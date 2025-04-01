@@ -1,3 +1,38 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=42", "wheel", "setuptools-scm>=6.2"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[tool.coverage.run]
+source = ["gitlab_cli"]
+omit = ["*/tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+
+[tool.setuptools_scm]
+# Esta configuración permite que setuptools-scm genere versiones automáticamente
+write_to = "gitlab_cli/_version.py"
+version_scheme = "post-release"
+local_scheme = "node-and-date"
+
+[project]
+name = "gitlab_cli"
+description = "CLI for GitLab"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+# Nota: No especificamos versión aquí, se tomará automáticamente de git
+dynamic = ["version"]

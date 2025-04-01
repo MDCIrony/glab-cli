@@ -37,6 +37,7 @@ ENV/
 *.log
 logs/
 log/
+.pypirc
 
 # Unit test / coverage reports
 htmlcov/
