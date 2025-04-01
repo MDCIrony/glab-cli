@@ -30,7 +30,15 @@ jobs:
         pip install -e .[dev]
     - name: Test with pytest
       run: |
-        pytest tests/ --cov=gitlab_cli --cov-report=xml
+        set -e
+        echo "Python version:"
+        python --version
+        echo "Current directory:"
+        pwd
+        echo "Files:"
+        ls -l
+        echo "Running tests..."
+        pytest tests/ --cov=gitlab_cli --cov-report=term-missing --cov-report=xml
 
   build-and-publish:
     needs: test
