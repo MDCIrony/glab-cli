@@ -16,7 +16,11 @@ api = GitLabAPI()
     help="Filter issues by state",
 )
 @click.option("--labels", help="Filter issues by labels (comma separated)")
-@click.option("--assignee", help="Filter issues by assignee username")
+@click.option(
+    "--assignee",
+    help="Filter issues by assignee username ('me' for current user, 'all' for no filter)",
+    default="me",
+)
 @click.option("--milestone", help="Filter issues by milestone")
 @click.option(
     "--sort",
@@ -43,8 +47,18 @@ def list_issues(project_id, state, labels, assignee, milestone, sort, order, lim
 
         if labels:
             params["labels"] = labels
+
         if assignee:
-            params["assignee_username"] = assignee
+            if assignee.lower() == "me":
+                # Get current user and filter by their username
+                current_user = api.get_current_user()
+                if current_user:
+                    params["assignee_username"] = current_user.get("username")
+            elif assignee.lower() != "all":
+                # Filter by specific username
+                params["assignee_username"] = assignee
+            # If assignee is "all", don't add any assignee filter
+
         if milestone:
             params["milestone"] = milestone
 

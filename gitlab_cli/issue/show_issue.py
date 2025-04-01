@@ -5,8 +5,11 @@ from rich.table import Table
 from rich.markdown import Markdown
 from gitlab_cli.utils import console
 from gitlab_cli.gitlab_api import GitLabAPI
+from gitlab_cli.utils import get_logger
 
 api = GitLabAPI()
+
+logger = get_logger(__name__)
 
 
 @click.command("show")
@@ -17,27 +20,38 @@ def show_issue(project_id, issue_iid):
     try:
         with console.status(f"Fetching issue {issue_iid}...", spinner="dots"):
             issue = api.get_project_issue(project_id, issue_iid)
+            if not issue:
+                console.print("[bold red]Error:[/bold red] Issue not found")
+                sys.exit(1)
+
+            logger.info("Fetched issue data %s", issue)
             links = api.get_issue_links(project_id, issue_iid)
 
         # Create a rich panel with issue details
-        state_color = "green" if issue["state"] == "opened" else "red"
-        assignees = ", ".join([a.get("name", "") for a in issue.get("assignees", [])])
-        labels = ", ".join(issue.get("labels", []))
+        state_color = "green" if issue.get("state") == "opened" else "red"
 
-        due_date = issue.get("due_date", "")
-        weight = issue.get("weight", "")
+        # Handle potential missing fields with defensive coding
+        author_name = issue.get("author", {}).get("name", "Unknown")
+        assignees = ", ".join(
+            [a.get("name", "Unknown") for a in issue.get("assignees", [])]
+        )
+        labels = ", ".join(issue.get("labels", []))
+        due_date = issue.get("due_date") or "Not set"
+        weight = issue.get("weight") or "Not set"
+
+        # Format the panel with safe access to keys
         console.print(
             Panel(
                 f"""
-                    [bold cyan]#{issue['iid']}[/bold cyan] [bold]{issue['title']}[/bold]
-                    [bold]State:[/bold] [{state_color}]{issue['state']}[/{state_color}]
-                    [bold]Author:[/bold] {issue['author']['name']}
-                    [bold]Assignees:[/bold] {assignees or 'None'}
-                    [bold]Labels:[/bold] {labels or 'None'}
-                    [bold]Created:[/bold] {issue['created_at']}
-                    [bold]Updated:[/bold] {issue['updated_at']}
-                    [bold]Due date:[/bold] {due_date}
-                    [bold]Weight:[/bold] {weight}
+    [bold cyan]#{issue.get('iid', 'N/A')}[/bold cyan] [bold]{issue.get('title', 'No title')}[/bold]
+    [bold]State:[/bold] [{state_color}]{issue.get('state', 'unknown')}[/{state_color}]
+    [bold]Author:[/bold] {author_name}
+    [bold]Assignees:[/bold] {assignees or 'None'}
+    [bold]Labels:[/bold] {labels or 'None'}
+    [bold]Created:[/bold] {issue.get('created_at', 'Unknown')}
+    [bold]Updated:[/bold] {issue.get('updated_at', 'Unknown')}
+    [bold]Due date:[/bold] {due_date}
+    [bold]Weight:[/bold] {weight}
                 """,
                 title="Issue Details",
                 width=100,
@@ -58,13 +72,19 @@ def show_issue(project_id, issue_iid):
             link_table.add_column("State", style="yellow")
 
             for link in links:
+                if not isinstance(link, dict) or "issue" not in link:
+                    continue
+
                 related_issue = link["issue"]
-                state_color = "green" if related_issue["state"] == "opened" else "red"
+                link_type = link.get("link_type", "Unknown")
+                state = related_issue.get("state", "unknown")
+                state_color = "green" if state == "opened" else "red"
+
                 link_table.add_row(
-                    f"{related_issue['iid']}",
-                    link["link_type"],
-                    related_issue["title"],
-                    f"[{state_color}]{related_issue['state']}[/{state_color}]",
+                    f"{related_issue.get('iid', 'N/A')}",
+                    link_type,
+                    related_issue.get("title", "No title"),
+                    f"[{state_color}]{state}[/{state_color}]",
                 )
             console.print(link_table)
 

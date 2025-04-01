@@ -4,6 +4,7 @@ from gitlab_cli.config import (
     PROJECTS_ENDPOINT,
     USERS_ENDPOINT,
     GROUPS_ENDPOINT,
+    CURRENT_USER_ENDPOINT,
     ERROR_REQUEST_FAILED,
 )
 
@@ -76,9 +77,17 @@ class GitLabAPI:
         return self._make_request("GET", url, params=params)
 
     def get_project_issue(self, project_id, issue_iid):
-        """Get a specific issue by project ID and issue IID"""
-        url = f"{PROJECTS_ENDPOINT}/{project_id}/issues/{issue_iid}"
-        return self._make_request("GET", url)
+        """Get a specific issue by project ID and issue IID
+
+        Returns issue data if found, None if not found or on error
+        """
+        try:
+            url = f"{PROJECTS_ENDPOINT}/{project_id}/issues/{issue_iid}"
+            return self._make_request("GET", url)
+        except Exception as e:
+            # Instead of raising an exception, return None on HTTP errors
+            print(f"Error retrieving issue: {str(e)}")
+            return None
 
     def create_project_issue(
         self,
@@ -173,8 +182,5 @@ class GitLabAPI:
         return self._make_request("POST", url, data=data)
 
     def get_current_user(self):
-        """Get information about the currently authenticated user"""
-        from config import CURRENT_USER_ENDPOINT
-
-        response = self._make_request("GET", CURRENT_USER_ENDPOINT)
-        return response
+        """Get information about the current authenticated user."""
+        return self._make_request("GET", CURRENT_USER_ENDPOINT)
