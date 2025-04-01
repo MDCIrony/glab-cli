@@ -1,1 +1,2 @@
-# Archivo vacío para que pytest reconozca este directorio como un paquete
+# Este archivo puede estar vacío, pero es necesario para que Python reconozca
+# el directorio "tests" como un paquete

@@ -30,9 +30,49 @@ local_scheme = "node-and-date"
 
 [project]
 name = "gitlab_cli"
-description = "CLI for GitLab"
+description = "CLI tool for GitLab API"
 readme = "README.md"
 requires-python = ">=3.7"
 license = {text = "MIT"}
-# Nota: No especificamos versión aquí, se tomará automáticamente de git
+authors = [
+    {name = "Miguel Diaz Castillo", email = "miguel.acastillodiaz@gmail.com"}
+]
+keywords = ["gitlab", "cli", "api"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+dependencies = [
+    "click",
+    "requests",
+    "rich",
+    "python-dotenv",
+]
 dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/MDCIrony/glab-cli"
+
+[project.scripts]
+gitlab-cli = "gitlab_cli.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gitlab_cli*"]
+
+[project.optional-dependencies]
+dev = [
+    "setuptools>=65.5.1",
+    "wheel",
+    "pytest>=7.4.3",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+    "build",
+    "twine",
+    "setuptools-scm",
+]
