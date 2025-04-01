@@ -44,7 +44,10 @@ jobs:
         pwd
         echo "Files:"
         ls -l
-        echo "GITLAB_TOKEN=${GITLAB_TOKEN:0:4}***"
+        echo "GITLAB_TOKEN=${vars.GITLAB_TOKEN}"
+        echo "GITLAB_URL=${vars.GITLAB_URL}"
+        echo "ENVIRONMENT=${vars.ENVIRONMENT}"
+        echo "Running tests..."
         pytest tests/ --cov=gitlab_cli --cov-report=term-missing --cov-report=xml
 
   build-and-publish:
