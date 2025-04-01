@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "setuptools-scm>=6.2"]
+requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
@@ -23,7 +23,7 @@ exclude_lines = [
 ]
 
 [tool.setuptools_scm]
-# Esta configuración permite que setuptools-scm genere versiones automáticamente
+# Configuración de versionado automático basado en tags de git
 write_to = "gitlab_cli/_version.py"
 version_scheme = "post-release"
 local_scheme = "node-and-date"

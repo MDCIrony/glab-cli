@@ -12,14 +12,14 @@ setup(
     ],
     extras_require={
         "dev": [
-            "pytest>=7.4.3",
+            "pytest>=7.4.3",  # Asegúrate de que pytest esté aquí
             "pytest-cov",
             "black",
             "flake8",
             "mypy",
             "build",
             "twine",
-            "setuptools-scm",  # Añadido para desarrollo
+            "setuptools-scm",
         ],
     },
     entry_points={
