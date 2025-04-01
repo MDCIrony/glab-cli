@@ -24,20 +24,21 @@ def show_issue(project_id, issue_iid):
         assignees = ", ".join([a.get("name", "") for a in issue.get("assignees", [])])
         labels = ", ".join(issue.get("labels", []))
 
+        due_date = issue.get("due_date", "")
+        weight = issue.get("weight", "")
         console.print(
             Panel(
                 f"""
-    [bold cyan]#{issue['iid']}[/bold cyan] [bold]{issue['title']}[/bold]
-
-    [bold]State:[/bold] [{state_color}]{issue['state']}[/{state_color}]
-    [bold]Author:[/bold] {issue['author']['name']}
-    [bold]Assignees:[/bold] {assignees or 'None'}
-    [bold]Labels:[/bold] {labels or 'None'}
-    [bold]Created:[/bold] {issue['created_at']}
-    [bold]Updated:[/bold] {issue['updated_at']}
-    {f"[bold]Due date:[/bold] {issue.get('due_date')}" if issue.get('due_date') else ''}
-    {f"[bold]Weight:[/bold] {issue.get('weight')}" if issue.get('weight') is not None else ''}
-            """,
+                    [bold cyan]#{issue['iid']}[/bold cyan] [bold]{issue['title']}[/bold]
+                    [bold]State:[/bold] [{state_color}]{issue['state']}[/{state_color}]
+                    [bold]Author:[/bold] {issue['author']['name']}
+                    [bold]Assignees:[/bold] {assignees or 'None'}
+                    [bold]Labels:[/bold] {labels or 'None'}
+                    [bold]Created:[/bold] {issue['created_at']}
+                    [bold]Updated:[/bold] {issue['updated_at']}
+                    [bold]Due date:[/bold] {due_date}
+                    [bold]Weight:[/bold] {weight}
+                """,
                 title="Issue Details",
                 width=100,
             )

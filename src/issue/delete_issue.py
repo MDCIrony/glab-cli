@@ -30,7 +30,7 @@ def delete_issue(project_id, issue_iid, force):
             return
 
         with console.status("Closing issue...", spinner="dots"):
-            result = api.delete_project_issue(project_id, issue_iid)
+            api.delete_project_issue(project_id, issue_iid)
 
         console.print(f"[bold green]Success![/bold green] Issue #{issue_iid} closed")
 

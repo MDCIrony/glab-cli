@@ -1,6 +1,9 @@
 import click
 from rich.table import Table
-from utils import console, gitlab
+from utils import console, gitlab, get_logger
+
+# Inicializar el logger para este módulo
+logger = get_logger(__name__)
 
 
 @click.command()
@@ -9,6 +12,7 @@ from utils import console, gitlab
 def list_repos(page, per_page):
     """List your GitLab repositories"""
     try:
+        logger.info(f"Listing repositories (page={page}, per_page={per_page})")
         projects = gitlab.get_projects(
             {"page": page, "per_page": per_page, "order_by": "name"}
         )
@@ -28,5 +32,8 @@ def list_repos(page, per_page):
             )
 
         console.print(table)
+        logger.debug(f"Found {len(projects)} repositories")
     except Exception as e:
-        console.print(f"[red]Error listing repositories: {str(e)}[/red]")
+        error_msg = f"Error listing repositories: {str(e)}"
+        console.print(f"[red]{error_msg}[/red]")
+        logger.error(error_msg, exc_info=True)
