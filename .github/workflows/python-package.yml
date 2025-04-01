@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: pypi
+    environment: pypy
     strategy:
       matrix:
         python-version: [3.8, 3.9]
@@ -43,7 +43,7 @@ jobs:
 
   build-and-publish:
     needs: test
-    environment: pypi
+    environment: pypy
     runs-on: ubuntu-latest
     strategy:
       matrix:
